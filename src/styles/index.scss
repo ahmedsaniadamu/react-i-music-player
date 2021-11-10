@@ -1,0 +1,420 @@
+:root{
+    //default themes
+    --text-color : rgba(255,255,255,0.8) ;
+    --header-background : rgb(8, 8, 8) ;
+    --footer-background : rgb(53, 52, 52) ;
+    --section-background : linear-gradient(45deg,rgb(15, 13, 13) ,rgba(95, 90, 90, 0.3)) ;
+    --icons-color : rgba(231, 1, 1, 0.986) ;
+    --border-color : rgb(197, 193, 193) ;
+    --modal-background : rgb(100, 98, 98) ;
+    --volume-background : rgb(30,30,30) ;
+    --volume-current-value-background : rgb(60,60,60) ;
+}
+
+//reset browser default style
+@import 'reset' ;
+
+// media queries for different devices.
+@import 'responsive' ;
+
+// a mixin to set font size for tablet and mobile devices. by default mobile = 0.8rem , tablet = 0.9rem
+@mixin set-font($mobile :0.8rem , $tablet : 0.9rem){
+    @include mobile-view(){
+        font-size: $mobile  !important;
+    }
+    @include tablet-view(){
+        font-size: $tablet !important;
+    }
+}
+
+//responsive height for main 3 containers : header , section , audio controls
+@mixin responsive-height($mobile-height , $tablet-height , $desktop-height , $larger-devices) {
+    
+    @media screen and (max-height : 700px) {
+          height: $mobile-height;
+      }
+
+      @media screen and (min-height : 701px) and (max-height : 1200px) {
+        height: $tablet-height;
+    }
+
+    @media screen  and (min-height : 1201px) and (max-height : 1500px) {
+        height: $desktop-height;
+    }
+
+    @media screen and (min-height : 1501px)  and (max-height : 3000px) {
+        height: $larger-devices;
+    }
+}
+ 
+body{
+    height: 100vh !important;
+    overflow-y: hidden;
+    color: var(--text-color);
+    background: {
+        color :  var(--volume-background) ; 
+    };
+  
+}
+
+// songs component style
+  section.songs-component{ 
+    height: 100vh;
+    background: {
+        image :  var(--section-background) ; 
+        repeat : no-repeat ;
+        size : cover ;
+    };
+    border-color: var(--border-color) !important ;
+   
+      div.app-header{
+          background:var(--header-background) !important;
+          @include responsive-height(10%, 9%, 5%, 5%) ;
+          position: relative;
+       
+          h3,.fa-search{
+              font-size: 1rem !important;
+          }
+          input{
+              font-size: 0.8rem !important;
+              background: var(--modal-background) ;
+              @include set-font(0.7rem, 0.8rem) ;
+              border: none !important;
+              outline: none !important;
+              color: var(--text-color);
+             
+              &:active,&:focus{
+                  border: none !important;
+                  outline: none ;
+                  box-shadow: 0.2rem 0.2rem 0.2rem var(--volume-current-value-background) ,
+                               -0.2rem -0.2rem 0.2rem var(--volume-current-value-background) ;
+                  ;
+                  cursor: pointer;
+                  color: var(--text-color) !important;
+              }
+          }
+          p{
+              font-size: 0.9rem !important;
+              position: absolute;
+              bottom: 5px;
+              opacity: 0.6;
+            
+              sub{
+                  background: var(--icons-color);
+                  padding: 0.1rem;
+                  border-radius: 1px;
+              }
+
+          }
+      }
+  }
+//------------------- //
+main.main-section{
+    @include responsive-height(90%, 96%, 95%, 95%) ;
+    
+    //maintain 3 section header section and footer in mobile view
+    @include mobile-view(){
+        @include responsive-height(70%, 73%, 80%, 82%) ;
+    }
+    overflow-y: scroll ;
+    overflow-x: hidden;
+     ul{
+        li{
+            color: var(--text-color);
+            font-size: 0.9rem;
+            @include set-font(0.7rem, ) ; 
+            div.d-flex{
+                .image-container{
+                    width: 15%;
+                    img{
+                        height: 40px ;
+                        width: 40px ;
+                        border-radius: 50% ;
+                        object-fit: cover;
+                    }
+                }
+                .song-description{
+                    margin-left: 4px;
+                    width: 85%;
+                    transition: .2s;
+                        &:hover{
+                            opacity: 0.7;
+                            cursor: pointer;
+                        }
+                    p{
+                        font-size: 0.8rem ;
+                        @include set-font( ) ;
+                        width: 100%;
+                        white-space: nowrap ;
+                        text-overflow: ellipsis;
+                        overflow: hidden ;
+                         height: auto;
+                         margin: { bottom: 0 ; };
+                         padding: 0;
+                    }
+                    small{
+                        font-size: 0.7rem;
+                        @include set-font(0.5rem,0.5rem );
+                        transform: translateY(-5px) ;
+                        opacity: 0.8;
+                    }
+                }
+            }
+        }
+     }
+}
+
+//audio controls icons container
+.controls{
+       &>div{
+              width: 300px;
+           span{
+               color: var(--text-color) ;
+               font-size: 1.3rem ;
+               transition: .2s;
+              
+                &:active{
+                   opacity: 0.7;
+               }
+           }
+           span.fa-play,span.fa-pause{
+               background: var(--icons-color);
+               border-radius: 0.2rem;                 
+           }
+       }
+       .volume-container{
+           height: 200px !important;
+           width: 400px;
+           border: 1px solid var(--border-color);
+           border-bottom: none;
+           @include mobile-view(){
+               width: 100%;
+               height: 150px !important;
+           }
+           background: var(--modal-background) ;
+           color: var(--text-color) ;
+          
+           & *{
+                 color: var(--text-color) !important;
+                 font-size: 0.9rem ;
+             
+           }
+           h1{
+               background: var(--footer-background)
+           }
+           div.volume-controls{ 
+               &>*{
+                   transition: .2s;
+               }      
+               &>*:active{
+                   cursor: pointer;
+                   opacity: 0.8;
+               }  
+               &>*:hover{  cursor: pointer; }       
+               span{                    
+                   font-size: 1.3rem ;
+                   @include set-font(1rem,1rem );
+                   font-weight: 900;
+                   width: 7% ;
+                   color: var(--text-color);
+               }
+               .volume-range{
+                    width: 86% ;
+                    height: 2rem ;
+               }
+           }
+       }
+
+    .menu-container{
+        @extend .volume-container ;
+        width: 50% ;
+        @include mobile-view(){
+            width: 100%;
+        }
+        @include tablet-view(){
+            width: 70%;
+        }
+    }
+
+    .settings{
+         & * {
+             background: transparent !important ;
+             border: none !important ;
+         }
+         a.btn{
+             padding: 0.2rem 0 !important ;
+             box-shadow: none !important ;
+             margin: 0.2rem 0 0 0;
+             font-size: 0.9rem;
+             @include set-font(00.7rem , 0.8rem ) ;
+
+             &:active{
+                  box-shadow: none !important ;
+             }
+         }
+
+         p{
+             font-size: 0.7rem ;
+             @include set-font(0.6, 0.7) ;
+             opacity: 0.7;
+             i{
+                font-size: 0.7rem ;
+                @include set-font(0.6, 0.7) ;
+             }
+             strong{
+                font-size: 0.8rem ;
+                @include set-font(0.7, 0.8)
+             }
+         }
+
+         .themes{
+                 
+              background: var(--volume-background) !important;
+                div{
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    margin: 0.2rem 0.4rem;
+                    display: inline-block;
+                    &:hover{
+                        cursor: pointer;
+                    }
+
+                    @include mobile-view(){
+                        width: 30px;
+                        height: 30px;                         
+                        margin: 0.2rem 0.3rem;
+                    }
+                }
+                div.default{
+                    background: rgb(63, 62, 62) !important;
+                }
+                div.sky-blue{
+                    background: rgb(109, 150, 240) !important;
+                }
+                div.dark-blue{
+                    background: rgb(2, 9, 73) !important;
+                }
+                div.brown{
+                    background: rgb(61, 35, 1) !important;
+                }
+                div.purple{
+                    background: rgb(182, 3, 158) !important;
+                }
+                div.light-green{
+                    background: rgb(40, 245, 119) !important;
+                }
+                div.dark-green{
+                    background: rgb(1, 78, 8) !important;
+                }
+                div.orange{
+                    background: rgb(184, 60, 2) !important;
+                }
+         }
+    }
+}
+
+.audio-body{
+     background: var(--volume-background) !important ;
+     opacity: 1 !important;
+      
+     div.audio-body-content{
+        //the height of the audio body component ( 80vh regardless of the parent element )
+        @include responsive-height(80vh, 82vh, 85vh, 87vh) ;  
+
+         .header{
+             background: var(--header-background);
+             padding: 0; margin: 0;
+
+             .fa-arrow-left{ @include set-font(1rem )}
+             .logo{ @extend .fa-arrow-left }
+         }
+        .cd-container{
+            height: 90%;
+            @include mobile-view(){
+                height: 70%;
+                margin-top: 4rem;
+            }
+           .cd{
+               height: 300px ;
+               width: 300px ;
+               border-radius: 50%;             
+               background: {  size: 105% 105% ; repeat: no-repeat ; position: -9px -5px ; }
+
+                @include mobile-view(){
+                    height: 250px ;
+                    width: 250px;
+                }
+                // animation name is set in audio body component based on condition.
+                animation: unknow 10s linear infinite;
+ 
+           }
+           @keyframes rotate {
+               from{ transform: rotateZ(0deg)} to{ transform: rotateZ(360deg)}
+           }
+       }
+       //audio caption
+       p{ 
+           font-size: 0.9rem ; 
+           @include set-font(0.7, 0.8) ;
+          }
+     }
+}
+
+// a container for input range element i.e a range slider that displays audio current time
+.audio-range-container{
+    //custom range input
+   .audio-range{
+        --webkit-apperance : none ;
+        --moz-appearance : none ;
+        appearance: none ;
+        display: block ;
+        width: 100% ;
+        height: 1px ;     
+        background: rgba(243, 243, 253, 0.9);    
+        &:focus{ outline: none; cursor: pointer;}
+        // for firefox
+        &::-moz-range-track{ 
+                             appearance: none;
+                             background: rgba(243, 243, 253, 0.9);
+                            }
+        &::-moz-range-thumb{
+            appearance: none !important;
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            border: none ;
+            background: var(--icons-color);
+            outline: none;
+                       
+            @include mobile-view(){
+                height: 8px ;
+                width: 8px;             
+            }
+        }
+        &::-webkit-slider-thumb{
+            appearance: none !important;
+            height: 10px;
+            width: 10px;             
+            border-radius: 50%;
+            border:  none;
+            background: var(--icons-color);
+            outline: none;
+                       
+            @include mobile-view(){
+                height: 8px ;
+                width: 8px; 
+            }
+        }
+         
+   }
+}
+
+footer.audio-controls{
+    @include responsive-height(20%, 16%, 15%, 13%) ;  
+    background: var(--header-background) !important;
+}
+
+div.desktop-audio-controls{
+    background: var(--footer-background) ;
+}

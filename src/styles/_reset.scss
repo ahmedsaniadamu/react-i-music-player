@@ -1,0 +1,44 @@
+/* reset defaul browser styles */
+
+// responsive
+@import 'responsive' ;
+
+
+html{
+    margin: {
+             top: 0; left: 0; right: 0; bottom: 0
+    } ;
+    padding: {
+        top: 0; left: 0; right: 0; bottom: 0
+    };
+}
+*{
+    margin: {
+        top: 0; left: 0; right: 0; bottom: 0
+    } ;
+
+    padding: {
+    top: 0; left: 0; right: 0; bottom: 0
+    };
+    box-sizing: border-box;
+}
+body{
+    font-family: sans-serif;
+    @include mobile-view(){
+        font-size: 0.8rem;
+    }
+     /* hide side scroll bar icon from the page and keep functionality */
+
+      /* for internet explorer edge and firefox */
+
+      -ms-overflow-style: none;
+      margin: 0;
+     padding: 0;
+}
+/* hide side scroll bar icon in the page and keep functionality */
+/* for chrome , opera and safari */
+
+::-webkit-scrollbar{
+    display: none;
+    width: 0;
+}
